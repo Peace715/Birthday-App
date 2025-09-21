@@ -5,34 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birthday Reminder App 🎂</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.5s, color 0.5s;
+    }
+    /* Light mode */
+    body.light-mode {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #000;
+    }
+    .card-box {
+      border-radius: 16px;
+      padding: 2rem;
+      width: 28rem;
+      transition: all 0.5s;
+    }
+    body.light-mode .card-box {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    body.light-mode .form-control {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+    }
+    body.light-mode .form-control::placeholder { color: #e0e0e0; }
+    body.light-mode .btn-custom {
+      background: linear-gradient(90deg, #92fe9d 0%, #00c9ff 100%);
+      border: none;
+      font-weight: bold;
+      transition: transform 0.2s;
+      color: #000;
+    }
+    body.light-mode .btn-custom:hover { transform: scale(1.05); }
+
+    /* Dark mode */
+    body.dark-mode {
+      background: radial-gradient(circle at top left, #1e1e2f, #121212);
+      color: #f0f0f0;
+    }
+    body.dark-mode .card-box {
+      background: #1c1c28;
+      color: #f0f0f0;
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+    }
+    body.dark-mode .form-control {
+      background-color: #2a2a3d;
+      border: none;
+      color: #f0f0f0;
+    }
+    body.dark-mode .form-control::placeholder { color: #b0b0b0; }
+    body.dark-mode .form-control:focus {
+      border: 1px solid #00ffc6;
+      box-shadow: 0 0 6px #00ffc6;
+    }
+    body.dark-mode .btn-custom {
+      background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+      border: none;
+      font-weight: bold;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    body.dark-mode .btn-custom:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #ff00cc;
+    }
+
+    /* Toggle switch */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+  </style>
 </head>
-<body class="bg-light">
+<body class="light-mode">
 
-  <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg p-4 rounded-4" style="width: 28rem;">
-      <h2 class="text-center text-primary mb-4">🎉 Birthday Reminder App</h2>
-      <form action="/users" method="POST">
-
-        <div class="mb-3">
-          <label for="username" class="form-label fw-bold">Username:</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label fw-bold">Email:</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="dob" class="form-label fw-bold">Date of Birth:</label>
-          <input type="date" class="form-control" id="dob" name="dob" placeholder="dd/mm/yyyy" required>
-          <small class="text-muted">Format: dd/mm/yyyy</small>
-        </div>
-
-        <button type="submit" class="btn btn-success w-100">➕ Add User</button>
-      </form>
-    </div>
+  <!-- Toggle Button -->
+  <div class="theme-toggle">
+    <i id="themeIcon" class="bi bi-moon-fill"></i>
   </div>
+
+  <div class="card-box text-center">
+    <h2 class="mb-4">🎂 Birthday Reminder</h2>
+    <form action="/users" method="POST">
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="bi bi-calendar-heart-fill"></i></span>
+        <input type="date" class="form-control" id="dob" name="dob" required>
+      </div>
+
+      <button type="submit" class="btn btn-custom w-100 mt-3">➕ Add User</button>
+    </form>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const themeToggle = document.querySelector(".theme-toggle");
+    const body = document.body;
+    const themeIcon = document.getElementById("themeIcon");
+
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark-mode");
+      body.classList.toggle("light-mode");
+      themeIcon.classList.toggle("bi-moon-fill");
+      themeIcon.classList.toggle("bi-sun-fill");
+    });
+  </script>
 </body>
 </html>
+
